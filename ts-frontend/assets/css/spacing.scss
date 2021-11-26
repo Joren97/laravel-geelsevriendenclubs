@@ -1,0 +1,46 @@
+$sizes: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+$positions: ('top', 'left', 'bottom', 'right');
+$xaxis: 'x-axis';
+$yaxis: 'y-axis';
+
+@each $size in $sizes {
+  @each $position in $positions {
+    .m#{str-slice($position, 0, 1)}-#{$size} {
+      margin-#{$position}: #{$size}rem !important;
+    }
+
+    .m-#{$size} {
+      margin: #{$size}rem !important;
+    }
+
+    .p#{str-slice($position, 0, 1)}-#{$size} {
+      padding-#{$position}: #{$size}rem !important;
+    }
+
+    .p-#{$size} {
+      padding: #{$size}rem !important;
+    }
+  }
+}
+
+@each $size in $sizes {
+    .m#{str-slice($xaxis, 0, 1)}-#{$size} {
+      margin-left: #{$size}rem !important;
+      margin-right: #{$size}rem !important;
+    }
+
+    .p#{str-slice($xaxis, 0, 1)}-#{$size} {
+      padding-left: #{$size}rem !important;
+      padding-right: #{$size}rem !important;
+    }
+
+    .m#{str-slice($yaxis, 0, 1)}-#{$size} {
+      margin-top: #{$size}rem !important;
+      margin-bottom: #{$size}rem !important;
+    }
+
+    .p#{str-slice($yaxis, 0, 1)}-#{$size} {
+      padding-top: #{$size}rem !important;
+      padding-bottom: #{$size}rem !important;
+    }
+  }

@@ -1,0 +1,55 @@
+{
+  "name": "geelsevriendenclubs",
+  "version": "1.0.0",
+  "description": "My phenomenal Nuxt.js project",
+  "author": "Joren Synaeve",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "cross-env NODE_ENV=production nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint:fix": "eslint --quiet --fix --ext .js,.vue --ignore-path .gitignore ."
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/proxy": "^1.3.3",
+    "@nuxtjs/pwa": "^3.2.2",
+    "@nuxtjs/svg": "^0.1.12",
+    "cookie-universal-nuxt": "^2.1.3",
+    "node-sass": "^4.13.1",
+    "nuxt": "^2.14.7",
+    "nuxt-buefy": "0.4.4",
+    "nuxt-property-decorator": "^2.9.1",
+    "sass-loader": "^8.0.2",
+    "vuex-module-decorators": "^1.0.1"
+  },
+  "devDependencies": {
+    "@nuxt/types": "^2.15.8",
+    "@nuxt/typescript-build": "^2.1.0",
+    "@nuxtjs/moment": "^1.6.1",
+    "babel-eslint": "^10.1.0",
+    "cross-env": "^5.2.1",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-loader": "^4.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "eslint-plugin-vue": "^6.2.2",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx lint-staged",
+      "pre-push": "npm run lint"
+    }
+  },
+  "lint-staged": {
+    "./src/*.{js,vue}": [
+      "npm run lint:fix"
+    ]
+  }
+}

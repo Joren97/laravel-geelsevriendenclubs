@@ -1,0 +1,120 @@
+// Import Bulma's core
+@import "~bulma/sass/utilities/_all";
+
+// Set your colors
+$primary: #febe34;
+$black: #303136;
+$light: #f2f2ea;
+$success: #96dd44;
+$primary-invert: findColorInvert($primary);
+$twitter: #4099ff;
+$twitter-invert: findColorInvert($twitter);
+
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: (
+    "white": (
+        $white,
+        $black,
+    ),
+    "black": (
+        $black,
+        $white,
+    ),
+    "light": (
+        $light,
+        $light-invert,
+    ),
+    "dark": (
+        $dark,
+        $dark-invert,
+    ),
+    "primary": (
+        $primary,
+        $primary-invert,
+    ),
+    "info": (
+        $info,
+        $info-invert,
+    ),
+    "success": (
+        $success,
+        $success-invert,
+    ),
+    "warning": (
+        $warning,
+        $warning-invert,
+    ),
+    "danger": (
+        $danger,
+        $danger-invert,
+    ),
+    "twitter": (
+        $twitter,
+        $twitter-invert,
+    ),
+);
+
+// Links
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
+$text: $black;
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+
+body {
+    font-family: "PT Sans";
+    color: $black;
+}
+
+.has-shadow-bottom {
+    box-shadow: 0 3px 30px 0px $black;
+}
+
+.level {
+    width: 100%;
+}
+
+.navbar-item img {
+    max-height: 2.75rem;
+    height: 200px !important;
+}
+
+.border-bottom-green {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid $success;
+}
+
+@media only screen and (min-width: $desktop) {
+    .navbar-item img {
+        max-height: 4.75rem;
+        height: 200px !important;
+    }
+    .navbar-end {
+        a.navbar-item {
+            cursor: pointer;
+            flex-basis: 185px;
+            margin: 0 0.25rem;
+            text-align: center;
+            justify-content: center;
+            border-bottom: 2px solid $black;
+            border-radius: 0 !important;
+            letter-spacing: 0px;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding-left: 0;
+            padding-right: 0;
+            padding-bottom: 0px;
+        }
+    }
+}
+
+.is-hover {
+    cursor: pointer;
+}
+
+.main-content {
+    min-height: calc(100vh - 21.16rem);
+}
