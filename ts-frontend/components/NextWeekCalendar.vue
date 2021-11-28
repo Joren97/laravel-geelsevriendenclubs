@@ -42,7 +42,7 @@
 import { Vue, Component } from 'nuxt-property-decorator';
 import moment from 'moment';
 import { gameModule } from '~/store';
-import Game from '~/models/Game';
+import { GameDto } from '~/models/Game';
 
 @Component({
   name: 'NextWeekCalendar',
@@ -51,7 +51,7 @@ export default class NextWeekCalendar extends Vue {
   loading = true;
   saturday = moment().endOf('week').format('DD/MM/YYYY');
 
-  get nextWeekGames(): Game[] {
+  get nextWeekGames(): GameDto[] {
     return gameModule.nextWeekGames;
   }
 

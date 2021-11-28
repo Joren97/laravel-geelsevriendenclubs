@@ -1,12 +1,7 @@
 <template>
   <section class="content">
     <h1>Rangschikking</h1>
-    <b-table
-      :data="scoreBoard"
-      striped
-      mobile-cards
-      :loading="$store.state.team.loading"
-    >
+    <b-table :data="scoreBoard" striped mobile-cards :loading="loading">
       <template>
         <b-table-column v-slot="props" field="index" label="Positie">
           {{ props.row.index }}.
@@ -81,20 +76,28 @@
     </b-table>
   </section>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { Vue, Component } from 'nuxt-property-decorator';
+import { teamModule } from '~/store';
+
+@Component({
   layout: 'guest',
-  async fetch({ store }) {
-    store.dispatch('team/getScoreboard');
-  },
-  computed: {
-    scoreBoard() {
-      let counter = 0;
-      return this.$store.state.team.scoreBoard.map((x) => {
-        counter++;
-        return { index: counter, ...x };
-      });
-    },
-  },
-};
+})
+export default class Scoreboard extends Vue {
+  async fetch() {
+    teamModule.getScoreboard(false);
+  }
+  get scoreBoard() {
+    let counter = 0;
+    const scoreBoard = teamModule.scoreBoard;
+    return scoreBoard.map((x: any) => {
+      counter++;
+      return { index: counter, ...x };
+    });
+  }
+
+  get loading() {
+    return teamModule.loading;
+  }
+}
 </script>

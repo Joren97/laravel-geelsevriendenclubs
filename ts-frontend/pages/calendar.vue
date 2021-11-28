@@ -30,33 +30,57 @@
     </div>
   </section>
 </template>
-<script>
+<script lang="ts">
 import moment from 'moment';
-import { mapState } from 'vuex';
-import CalendarTable from '@/components/CalendarTable';
-export default {
+import CalendarTable from '@/components/CalendarTable.vue';
+import { Vue, Component, Watch } from 'nuxt-property-decorator';
+import { gameModule } from '~/store';
+@Component({
   components: { CalendarTable },
-  layout: 'guest',
-  async fetch({ store, query }) {
-    await store.commit('game/setQueryParams', query);
-    store.dispatch('game/getAll');
-  },
-  computed: {
-    ...mapState({
-      loading: (state) => state.game.loading,
-      games: (state) => state.game.games,
-    }),
-    month: {
-      get() {
-        return new Date(this.$store.state.game.filterDates[0]);
-      },
-      set(value) {
+  layout: 'guest'
+})
+export default class Calendar extends Vue {
+
+  @Watch('$route', { immediate: true, deep: true })
+  onUrlChange(
+    to: { query: { page: string; sorting: string } },
+    from: { query: { page: string; sorting: string } },
+  ) {
+    console.log('Route watch triggered');
+    if (!to || !from) return;
+
+    let trigger = false;
+    if (to.query.page !== from.query.page) {
+      gameModule.setPaginationParams({
+        page: to.query.page
+      });
+      trigger = true;
+    }
+    if (trigger) gameModule.getAll();
+  }
+
+  async fetch({ query }: any) {
+    gameModule.setPaginationParams(query);
+    gameModule.getAll();
+  }
+
+  get loading(){
+    return gameModule.loading;
+  }
+
+  get games(){
+    return gameModule.items;
+  }
+
+  get month(){
+    return new Date();;
+  }
+
+  set month(value: Date){
         const start = moment(value).startOf('month').format('YYYY-MM-DD');
         const end = moment(value).endOf('month').format('YYYY-MM-DD');
         this.$router.push(`?from=${start}&till=${end}`);
-      },
-    },
-  },
-  watchQuery: true,
+
+  }
 };
 </script>

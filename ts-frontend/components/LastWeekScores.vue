@@ -45,7 +45,7 @@
 import { Vue, Component } from 'nuxt-property-decorator';
 import moment from 'moment';
 import { gameModule } from '~/store';
-import Game from '~/models/Game';
+import { GameDto } from '~/models/Game';
 
 @Component({
   name: 'LastWeekScores',
@@ -67,11 +67,11 @@ export default class LastWeekScores extends Vue {
       });
   }
 
-  get lastWeekGames(): Game[] {
+  get lastWeekGames(): GameDto[] {
     return gameModule.lastWeekGames;
   }
 
-  winningClass(game: Game, home: boolean) {
+  winningClass(game: GameDto, home: boolean) {
     if (home) {
       if (game.homeTeamScore > game.outTeamScore) return 'has-text-primary';
     } else {

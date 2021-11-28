@@ -65,7 +65,7 @@ import { gameModule, teamModule } from '~/store';
 export default class Guesthome extends Vue {
   beforeMount() {
     teamModule.get();
-    gameModule.get();
+    gameModule.getAll();
   }
 }
 </script>

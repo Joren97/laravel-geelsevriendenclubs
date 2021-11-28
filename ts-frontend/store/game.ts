@@ -1,78 +1,70 @@
-import { Getter } from 'vuex-class';
-import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators';
-import  Game  from '~/models/Game';
+import { Module, Mutation, Action } from 'vuex-module-decorators';
+import { GameDto, CreateGameDto, UpdateGameDto } from '~/models/Game';
 import { $axios } from '~/utils/api';
-
-const RESOURCE = '/api/games';
-
+import BaseModule from './base';
 
 @Module({ name: 'game', stateFactory: true, namespaced: true })
-export default class GameModule extends VuexModule {
-    loading: boolean = false
-    error: string | null = ''
-    games: Game[] = []
-    lastWeekGames: Game[] = []
-    nextWeekGames: Game[] = []
+export default class GameModule extends BaseModule<GameDto, CreateGameDto, UpdateGameDto> {
+  lastWeekGames: GameDto[] = []
+  nextWeekGames: GameDto[] = []
+  RESOURCE = '/api/games';
 
-    @Mutation
-    setGames(value: Game[]) {
-        this.games = value;
-    }
+  @Mutation
+  setLastWeekGames(value: GameDto[]) {
+    this.lastWeekGames = value;
+  }
 
-    @Mutation
-    setLastWeekGames(value: Game[]) {
-        this.lastWeekGames = value;
-    }
+  @Mutation
+  setNextWeekGames(value: GameDto[]) {
+    this.nextWeekGames = value;
+  }
 
-    @Mutation
-    setNextWeekGames(value: Game[]) {
-        this.nextWeekGames = value;
-    }
+  @Action
+  async getAll() {
+    await super.getAll();
+  }
 
-    @Mutation
-    setError(value: string | null = 'An unknown error occured'): void {
-        this.loading = false;
-        this.error = value;
-    }
+  @Action
+  async create(obj: CreateGameDto) {
+    await super.create(obj);
+  }
 
-    @Mutation
-    setLoading(value: boolean): void {
-        this.loading = value;
-    }
+  @Action
+  async get(id: string) {
+    await super.get(id);
+  }
 
-    @Action({rawError: true})
-    async get(){
-        try {
-            this.setLoading(true);
-            let {data: {data, current_page, per_page, total}}= await $axios.get(`${RESOURCE}`);            
-            this.setGames(data);            
-            this.setLoading(false);
-          } catch (error) {
-            this.setError();
-          }
-    }
+  @Action
+  async delete(id: string) {
+    await super.delete(id);
+  }
 
-    @Action({rawError: true})
-    async getLastWeekGames(params: {from: string, till: string}){
-        try {
-            this.setLoading(true);
-            let {data: {data, current_page, per_page, total}}= await $axios.get(`${RESOURCE}?from=${params.from}&till=${params.till}`);            
-            this.setLastWeekGames(data);            
-            this.setLoading(false);
-          } catch (error) {
-            this.setError();
-          }
-    }
+  @Action
+  async update(obj: UpdateGameDto) {
+    return await super.update(obj);
+  }
 
-    @Action({rawError: true})
-    async getNextWeekGames(params: {from: string, till: string}){
-        try {
-            this.setLoading(true);
-            let {data: {data, current_page, per_page, total}}= await $axios.get(`${RESOURCE}?from=${params.from}&till=${params.till}`);    
-            this.setNextWeekGames(data);      
-            this.setLoading(false);
-          } catch (error) {
-            this.setError();
-          }
+  @Action({ rawError: true })
+  async getLastWeekGames(params: { from: string, till: string }) {
+    try {
+      this.setLoading(true);
+      let { data: { data, current_page, per_page, total } } = await $axios.get(`${this.RESOURCE}?from=${params.from}&till=${params.till}`);
+      this.setLastWeekGames(data);
+      this.setLoading(false);
+    } catch (error) {
+      this.setError();
     }
+  }
+
+  @Action({ rawError: true })
+  async getNextWeekGames(params: { from: string, till: string }) {
+    try {
+      this.setLoading(true);
+      let { data: { data, current_page, per_page, total } } = await $axios.get(`${this.RESOURCE}?from=${params.from}&till=${params.till}`);
+      this.setNextWeekGames(data);
+      this.setLoading(false);
+    } catch (error) {
+      this.setError();
+    }
+  }
 }
