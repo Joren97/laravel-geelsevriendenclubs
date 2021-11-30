@@ -118,37 +118,24 @@
     </div>
   </section>
 </template>
-<script>
-import { mapState, mapGetters } from 'vuex';
-export default {
+<script lang="ts">
+import { Vue, Component } from 'nuxt-property-decorator';
+import { gameModule, teamModule } from '~/store';
+@Component({
   layout: 'guest',
-  async fetch({ store }) {
-    store.dispatch('team/getAllUnfiltered');
-  },
-  data() {
-    return {
-      selectedTeam: null,
-    };
-  },
-  computed: {
-    ...mapGetters({
-      players: 'team/playersInCurrentTeam',
-      secretary: 'team/secretaryInCurrentTeam',
-      president: 'team/presidentInCurrentTeam',
-      contact: 'team/contactInCurrentTeam',
-    }),
-    ...mapState({
-      currentTeam: (state) => state.team.currentTeam,
-    }),
-  },
+  name: 'Clubs',
+})
+export default class Clubs extends Vue {
+  async fetch() {
+    teamModule.getAll();
+  }
+  selectedTeam = null;
+
+  get players() {
+    return [];
+  }
   destroyed() {
-    this.$store.commit('team/setCurrentTeam', null);
-  },
-  methods: {
-    getCurrentTeam(id) {
-      this.selectedTeam = id;
-      this.$store.dispatch('team/get', id);
-    },
-  },
-};
+    gameModule.setItem(null);
+  }
+}
 </script>
