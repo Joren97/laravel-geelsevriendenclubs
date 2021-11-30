@@ -15,8 +15,16 @@
     </div>
     <div class="columns">
       <div class="column">
-        <CalendarTable v-if="games.length > 0" :games="games" />
-        <p v-else>Geen wedstrijden om weer te geven.</p>
+        <div v-if="loadingActive">
+          <b-skeleton></b-skeleton>
+          <b-skeleton></b-skeleton>
+          <b-skeleton></b-skeleton>
+          <b-skeleton></b-skeleton>
+        </div>
+        <div v-else>
+          <CalendarTable v-if="games.length > 0" :games="games" />
+          <p v-else>Geen wedstrijden om weer te geven.</p>
+        </div>
       </div>
       <div class="column is-narrow is-hidden-touch">
         <b-datepicker
@@ -38,6 +46,7 @@ import { gameModule } from '~/store';
 @Component({
   components: { CalendarTable },
   layout: 'guest',
+  name: 'Calendar',
 })
 export default class Calendar extends Vue {
   @Watch('$route', { immediate: true, deep: true })
@@ -62,12 +71,7 @@ export default class Calendar extends Vue {
     if (trigger) gameModule.getAll();
   }
 
-  async fetch({ query }: any) {
-    gameModule.setPaginationParams(query);
-    gameModule.getAll();
-  }
-
-  get loading() {
+  get loadingActive() {
     return gameModule.loading;
   }
 
@@ -83,6 +87,11 @@ export default class Calendar extends Vue {
     const start = moment(value).startOf('month').format('YYYY-MM-DD');
     const end = moment(value).endOf('month').format('YYYY-MM-DD');
     this.$router.push(`?from=${start}&till=${end}`);
+  }
+
+  async fetch({ query }: any) {
+    gameModule.setPaginationParams(query);
+    gameModule.getAll();
   }
 }
 </script>

@@ -62,10 +62,7 @@ export default class BaseModule<Dto, CreateDto, UpdateDto> extends VuexModule {
     try {
       this.setLoading(true);
       const { data: {data, per_page, total} } = await $axios.get(`${this.RESOURCE}` +
-        extra);
-        console.log(data);
-        console.log(total);
-        
+        extra);        
       this.setItems({ data, total });
     } catch (error) {
       this.setError();

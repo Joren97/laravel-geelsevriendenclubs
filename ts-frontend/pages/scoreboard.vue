@@ -1,7 +1,7 @@
 <template>
   <section class="content">
     <h1>Rangschikking</h1>
-    <b-table :data="scoreBoard" striped mobile-cards :loading="loading">
+    <b-table :data="scoreBoard" striped mobile-cards :loading="loadingActive">
       <template>
         <b-table-column v-slot="props" field="index" label="Positie">
           {{ props.row.index }}.
@@ -96,7 +96,7 @@ export default class Scoreboard extends Vue {
     });
   }
 
-  get loading() {
+  get loadingActive(): boolean {
     return teamModule.loading;
   }
 }

@@ -100,11 +100,18 @@ import moment from 'moment';
 import { GameDto } from '~/models/Game';
 
 @Component({
-  name: 'SmallScoreboard',
+  name: 'CalendarTable',
 })
 export default class CalendarTable extends Vue {
-  @Prop()
-  games: GameDto[] = [];
+  @Prop({
+    type: Array,
+    required: true,
+    default: () => {
+      return [];
+    },
+  })
+  // @ts-ignore
+  games: Array<GameDto>;
 
   get dates() {
     let datetimes = this.games.map((x) => {

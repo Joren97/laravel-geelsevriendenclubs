@@ -2,7 +2,7 @@ import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators';
 import  Team  from '~/models/Team';
 import { $axios } from '~/utils/api';
 
-const RESOURCE = '/api/teams';
+const RESOURCE = '/api/team';
 
 @Module({ name: 'team', stateFactory: true, namespaced: true })
 export default class TeamModule extends VuexModule {
@@ -37,15 +37,11 @@ export default class TeamModule extends VuexModule {
     @Action({rawError: true})
     async get(){
         try {
-            this.setLoading(true);
-            console.log($axios);
-            
+            this.setLoading(true);            
             const {data} = await $axios.get(`${RESOURCE}`);
             this.setTeams(data)
-            console.log(data);
             this.setLoading(false);
           } catch (err) {
-              console.log(err);
             this.setError();
           }
     }
