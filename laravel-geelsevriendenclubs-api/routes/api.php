@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\TeamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +45,22 @@ Route::group([
 ], function ($router) {
     Route::get('/', [GameController::class, 'getAll']);
     Route::get('/{id}', [GameController::class, 'get']);
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'team'
+
+], function ($router) {
+    Route::get('/', [TeamController::class, 'getAll']);
+    Route::get('/{id}', [TeamController::class, 'get']);
+    Route::get('/scoreboard', [TeamController::class, 'scoreBoard'])->name('scoreboard');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'scoreboard'
+
+], function ($router) {
+    Route::get('/', [TeamController::class, 'scoreBoard']);
 });

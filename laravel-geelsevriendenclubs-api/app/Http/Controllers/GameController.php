@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Game;
 
+function IsNullOrEmptyString($str)
+{
+    return (!isset($str) || trim($str) === '');
+}
+
 class GameController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth:api', ['except' => ['getAll', 'get']]);
     }
 
@@ -16,10 +22,19 @@ class GameController extends Controller
         $from = date($request->get("from"));
         $till = date($request->get("till"));
 
-        return response()->json(Game::where('dateTime', '>', $from)
-        ->where('dateTime', '<', $till)
-        ->with(['homeTeam', 'outTeam'])
-        ->paginate());
+        $conditions = [];
+
+        if (!IsNullOrEmptyString($from)) {
+            array_push($conditions, ['dateTime', '>', $from]);
+        }
+
+        if (!IsNullOrEmptyString($till)) {
+            array_push($conditions, ['dateTime', '<', $till]);
+        }
+
+        return response()->json(Game::where($conditions)
+            ->with(['homeTeam', 'outTeam'])
+            ->paginate());
     }
 
     public function get($id)
