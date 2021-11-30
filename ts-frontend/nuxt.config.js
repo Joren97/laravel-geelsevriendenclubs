@@ -8,7 +8,7 @@ const axiosObject =
       }
     : {
         axios: {
-          baseURL: 'http://localhost/laravel-geelsevriendenclubs-api/public',
+          baseURL: 'http://localhost/laravel-jwt-auth/public/',
           progress: false,
         },
       };

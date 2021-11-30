@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Team;
-use Hamcrest\Core\IsSame;
 use Illuminate\Http\Request;
+use App\Models\Team;
 
 class TeamController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth:api', ['except' => ['getAll', 'get', 'scoreBoard']]);
+    }
 
     public function getAll(Request $request)
     {
@@ -42,7 +44,7 @@ class TeamController extends Controller
 
     public function scoreBoard(Request $request)
     {
-        $isSmall = $request->get('isSmall');
+        $isSmall = $request->get('isSmall', false);
 
         $teams = Team::with(['homeGames', 'outGames'])->get();
 
@@ -114,7 +116,7 @@ class TeamController extends Controller
 
         usort($arr, function($a, $b) {return $a->points < $b->points; });
 
-        if ($isSmall) {
+        if ($isSmall === true || $isSmall == "true") {
             return response()->json(array_slice($arr, 0, 5));
         }
 

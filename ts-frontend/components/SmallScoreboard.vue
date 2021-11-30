@@ -36,14 +36,14 @@ import { teamModule } from '~/store';
   name: 'SmallScoreboard',
 })
 export default class SmallScoreboard extends Vue {
-  loading = false;
+  loading = true;
 
   get scoreBoard() {
     return teamModule.scoreBoard;
   }
 
   beforeMount() {
-    teamModule.getScoreboard().finally(() => {
+    teamModule.getScoreboard(true).finally(() => {
       this.loading = false;
     });
   }

@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
 {
+    use HasFactory;
+
     public function homeTeam(){
         return $this->belongsTo(Team::class, "homeTeamId", "id");
     }
@@ -13,19 +16,4 @@ class Game extends Model
     public function outTeam(){
         return $this->belongsTo(Team::class, "outTeamId", "id");
     }
-
-    // /**
-    //  * The attributes that are mass assignable.
-    //  *
-    //  * @var array
-    //  */
-    // protected $fillable = [
-    //     "homeTeamId",
-    //     "outTeamId",
-    //     "homeTeamScore" => null,
-    //     "outTeamScore" => null,
-    //     "dateTime",
-    //     "isCup" => false,
-    //     "isCancelled" => false
-    // ];
 }

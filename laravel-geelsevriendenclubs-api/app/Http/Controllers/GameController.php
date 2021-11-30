@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Game;
 use Illuminate\Http\Request;
+use App\Models\Game;
 
 class GameController extends Controller
 {
-    
+    public function __construct() {
+        $this->middleware('auth:api', ['except' => ['getAll', 'get']]);
+    }
+
     public function getAll(Request $request)
     {
         $from = date($request->get("from"));

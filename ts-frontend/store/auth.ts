@@ -1,6 +1,7 @@
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators';
+import { $axios } from '~/utils/api';
 
-const RESOURCE = '/tokenauth';
+const RESOURCE = '/api/auth';
 
 const initialState = {
   user: null,
@@ -22,5 +23,18 @@ export default class AuthModule extends VuexModule {
     @Mutation
     setLoading(value: boolean): void {
         this.loading = value;
+    }
+
+    @Action
+    async login(login: {username: string, password: string}){
+        try {
+            this.setLoading(true);
+            let { data: {access_token, expires_in} } = await $axios.post(`${RESOURCE}/login`, login);
+            this.setLoading(false);
+            const x: any = {access_token, expires_in}
+            return x;
+          } catch (error) {
+            this.setError();            
+          }
     }
 }
