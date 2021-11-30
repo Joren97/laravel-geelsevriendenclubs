@@ -7,7 +7,8 @@ import BaseModule from './base';
 export default class GameModule extends BaseModule<GameDto, CreateGameDto, UpdateGameDto> {
   lastWeekGames: GameDto[] = []
   nextWeekGames: GameDto[] = []
-  RESOURCE = '/api/games';
+  RESOURCE = '/api/game';
+  filterDates: string[] = ['', ''];
 
   @Mutation
   setLastWeekGames(value: GameDto[]) {
@@ -19,9 +20,21 @@ export default class GameModule extends BaseModule<GameDto, CreateGameDto, Updat
     this.nextWeekGames = value;
   }
 
+  @Mutation
+  setFromDate(value: string) {
+    this.filterDates[0] = value;
+  }
+
+  @Mutation
+  setTillDate(value: string) {
+    this.filterDates[1] = value;
+  }
+
   @Action
   async getAll() {
-    await super.getAll();
+    await super.getAll({
+      extra: `?from=${this.filterDates[0]}&till=${this.filterDates[1]}`
+    });
   }
 
   @Action

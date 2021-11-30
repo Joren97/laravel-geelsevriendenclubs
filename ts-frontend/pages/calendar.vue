@@ -37,25 +37,28 @@ import { Vue, Component, Watch } from 'nuxt-property-decorator';
 import { gameModule } from '~/store';
 @Component({
   components: { CalendarTable },
-  layout: 'guest'
+  layout: 'guest',
 })
 export default class Calendar extends Vue {
-
   @Watch('$route', { immediate: true, deep: true })
   onUrlChange(
-    to: { query: { page: string; sorting: string } },
-    from: { query: { page: string; sorting: string } },
+    to: { query: { from: string; till: string } },
+    from: { query: { from: string; till: string } },
   ) {
     console.log('Route watch triggered');
     if (!to || !from) return;
 
     let trigger = false;
-    if (to.query.page !== from.query.page) {
-      gameModule.setPaginationParams({
-        page: to.query.page
-      });
+    if (to.query.from !== from.query.from) {
+      gameModule.setFromDate(to.query.from);
       trigger = true;
     }
+
+    if (to.query.till !== from.query.till) {
+      gameModule.setTillDate(to.query.till);
+      trigger = true;
+    }
+
     if (trigger) gameModule.getAll();
   }
 
@@ -64,23 +67,22 @@ export default class Calendar extends Vue {
     gameModule.getAll();
   }
 
-  get loading(){
+  get loading() {
     return gameModule.loading;
   }
 
-  get games(){
+  get games() {
     return gameModule.items;
   }
 
-  get month(){
-    return new Date();;
+  get month() {
+    return new Date();
   }
 
-  set month(value: Date){
-        const start = moment(value).startOf('month').format('YYYY-MM-DD');
-        const end = moment(value).endOf('month').format('YYYY-MM-DD');
-        this.$router.push(`?from=${start}&till=${end}`);
-
+  set month(value: Date) {
+    const start = moment(value).startOf('month').format('YYYY-MM-DD');
+    const end = moment(value).endOf('month').format('YYYY-MM-DD');
+    this.$router.push(`?from=${start}&till=${end}`);
   }
-};
+}
 </script>

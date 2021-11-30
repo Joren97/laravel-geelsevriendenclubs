@@ -28,9 +28,9 @@ export default class BaseModule<Dto, CreateDto, UpdateDto> extends VuexModule {
   }
 
   @Mutation
-  setItems(obj: { items: Array<Dto>, totalCount?: number }) {
-    this.items = obj.items;
-    this.totalCount = obj.totalCount ? obj.totalCount : 0;
+  setItems(obj: { data: Array<Dto>, total?: number }) {
+    this.items = obj.data;
+    this.totalCount = obj.total ? obj.total : 0;
     this.error = null;
     this.loading = false;
   }
@@ -61,12 +61,12 @@ export default class BaseModule<Dto, CreateDto, UpdateDto> extends VuexModule {
     const skipCount = (page - 1) * pageSize;
     try {
       this.setLoading(true);
-      const { data: { result: { items, totalCount } } } = await $axios.get(`${this.RESOURCE}/GetAll?` +
-        `MaxResultCount=${pageSize}` +
-        `&SkipCount=${skipCount}` +
-        `&Sorting=${sorting}` +
+      const { data: {data, per_page, total} } = await $axios.get(`${this.RESOURCE}` +
         extra);
-      this.setItems({ items, totalCount });
+        console.log(data);
+        console.log(total);
+        
+      this.setItems({ data, total });
     } catch (error) {
       this.setError();
     }

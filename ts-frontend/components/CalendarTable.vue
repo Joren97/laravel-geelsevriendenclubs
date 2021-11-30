@@ -31,7 +31,7 @@
                 </div>
                 <div class="columns mb-0">
                   <div class="column">
-                    {{ getXMatchOnDate(date, i, j).homeTeam.name }}
+                    {{ getXMatchOnDate(date, i, j).home_team.name }}
                   </div>
                   <div class="column is-narrow">
                     {{ getXMatchOnDate(date, i, j).homeTeamScore }}
@@ -39,7 +39,7 @@
                 </div>
                 <div class="columns">
                   <div class="column">
-                    {{ getXMatchOnDate(date, i, j).outTeam.name }}
+                    {{ getXMatchOnDate(date, i, j).out_team.name }}
                   </div>
                   <div class="column is-narrow">
                     {{ getXMatchOnDate(date, i, j).outTeamScore }}
@@ -75,7 +75,7 @@
           </div>
           <div class="columns is-mobile mb-0">
             <div class="column mb-0 pb-0">
-              {{ game.homeTeam.name }}
+              {{ game.home_team.name }}
             </div>
             <div class="column is-narrow mb-0 pb-0">
               {{ game.homeTeamScore }}
@@ -83,7 +83,7 @@
           </div>
           <div class="columns is-mobile mb-0 pb-0">
             <div class="column mb-0">
-              {{ game.outTeam.name }}
+              {{ game.out_team.name }}
             </div>
             <div class="column is-narrow mb-0 pb-0">
               {{ game.outTeamScore }}
@@ -94,48 +94,48 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
+import { Vue, Component, Prop } from 'nuxt-property-decorator';
 import moment from 'moment';
-export default {
-  props: {
-    games: {
-      type: Array,
-      default: () => {
-        return [];
-      },
-    },
-  },
-  computed: {
-    dates() {
-      let datetimes = this.games.map((x) => {
-        return moment(x.dateTime).format('YYYY-MM-DD');
-      });
-      let uniques = [];
-      for (var i = 0; i < datetimes.length; i++) {
-        if (!uniques.includes(datetimes[i])) {
-          uniques.push(datetimes[i]);
-        }
+import { GameDto } from '~/models/Game';
+
+@Component({
+  name: 'SmallScoreboard',
+})
+export default class CalendarTable extends Vue {
+  @Prop()
+  games: GameDto[] = [];
+
+  get dates() {
+    let datetimes = this.games.map((x) => {
+      return moment(x.dateTime).format('YYYY-MM-DD');
+    });
+    let uniques: string[] = [];
+    for (var i = 0; i < datetimes.length; i++) {
+      if (!uniques.includes(datetimes[i])) {
+        uniques.push(datetimes[i]);
       }
-      return uniques;
-    },
-  },
-  methods: {
-    getXMatchOnDate(date, i, j) {
-      let games = this.matchesOnDate(date);
-      games = games.slice((i - 1) * 3, games.length);
-      return games[j - 1];
-    },
-    matchesOnDate(date) {
-      return this.games.filter(
-        (x) => moment(x.dateTime).format('YYYY-MM-DD') === date,
-      );
-    },
-    matchesOnDayUppedToMultipleOfThree(date) {
-      let amountOfMatches = this.matchesOnDate(date).length;
-      let multiple = amountOfMatches + 3 - 1;
-      multiple -= multiple % 3;
-      return multiple;
-    },
-  },
-};
+    }
+    return uniques;
+  }
+
+  getXMatchOnDate(date: string, i: number, j: number): GameDto {
+    let games = this.matchesOnDate(date);
+    games = games.slice((i - 1) * 3, games.length);
+    return games[j - 1];
+  }
+
+  matchesOnDate(date: string) {
+    return this.games.filter(
+      (x: GameDto) => moment(x.dateTime).format('YYYY-MM-DD') === date,
+    );
+  }
+
+  matchesOnDayUppedToMultipleOfThree(date: string) {
+    let amountOfMatches = this.matchesOnDate(date).length;
+    let multiple = amountOfMatches + 3 - 1;
+    multiple -= multiple % 3;
+    return multiple;
+  }
+}
 </script>
