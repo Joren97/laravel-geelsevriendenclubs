@@ -25,7 +25,7 @@
         </div>
       </div>
     </section>
-    <section class="section container">
+    <div class="section container">
       <div class="columns">
         <div class="column"></div>
       </div>
@@ -40,7 +40,7 @@
           <SmallScoreboard />
         </div>
       </div>
-    </section>
+    </div>
     <Footer />
   </div>
 </template>
