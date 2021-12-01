@@ -65,9 +65,10 @@ export default {
   },
   mounted() {
     if (this.config.selectedValue) {
-      this.selectedValue = this.data[this.config.selectedValue.object][
-        this.config.selectedValue.property
-      ];
+      this.selectedValue =
+        this.data[this.config.selectedValue.object][
+          this.config.selectedValue.property
+        ];
       this.onInput(this.selectedValue, true);
     } else {
       if (this.data[this.config.name] == undefined) {

@@ -1,4 +1,4 @@
-import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators';
+import { VuexModule, Mutation, Action } from 'vuex-module-decorators';
 import { $axios } from '~/utils/api';
 
 export const namespaced = true;
@@ -24,6 +24,7 @@ export default class BaseModule<Dto, CreateDto, UpdateDto> extends VuexModule {
 
   @Mutation
   setLoading(value: boolean): void {
+    console.log("Setting base loading")
     this.loading = value;
   }
 
@@ -59,12 +60,13 @@ export default class BaseModule<Dto, CreateDto, UpdateDto> extends VuexModule {
     const extra = paginationParams !== undefined && paginationParams.extra !== undefined ? paginationParams.extra : '';
 
     const skipCount = (page - 1) * pageSize;
-    try {
+    try {      
       this.setLoading(true);
       const { data: {data, per_page, total} } = await $axios.get(`${this.RESOURCE}` +
         extra);        
       this.setItems({ data, total });
     } catch (error) {
+      console.log(error);      
       this.setError();
     }
   }
@@ -73,9 +75,9 @@ export default class BaseModule<Dto, CreateDto, UpdateDto> extends VuexModule {
   async get(id: string) {
     try {
       this.setLoading(true);
-      const { data: { result, success } } = await $axios.get(`${this.RESOURCE}/get?id=${id}`);
-      this.setItem(result);
-      return result;
+      const { data } = await $axios.get(`${this.RESOURCE}/${id}`);
+      this.setItem(data);
+      return data;
     } catch (error) {
       this.setError();
     }

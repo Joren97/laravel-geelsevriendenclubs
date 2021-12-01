@@ -24,11 +24,11 @@ export default {
     return {
       navItems: [
         { display: 'Home', link: '/' },
-        { display: 'Kalender & uitslagen', link: 'calendar' },
-        { display: 'Rangschikking', link: 'scoreboard' },
-        { display: 'Schorsingen & boetes', link: 'suspensions' },
-        { display: 'Clubinfo', link: 'clubs' },
-        { display: 'Reglement', link: 'rules' },
+        { display: 'Kalender & uitslagen', link: '/calendar' },
+        { display: 'Rangschikking', link: '/scoreboard' },
+        { display: 'Schorsingen & boetes', link: '/suspensions' },
+        { display: 'Clubinfo', link: '/clubs' },
+        { display: 'Reglement', link: '/rules' },
       ],
     };
   },
