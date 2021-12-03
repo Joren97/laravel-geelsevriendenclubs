@@ -6,5 +6,6 @@ export default interface Team {
         team_id: number,
         goalsScored: number,
         isHomeTeam: boolean
-    }
+    },
+    icon: string
 }

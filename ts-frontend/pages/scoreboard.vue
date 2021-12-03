@@ -7,7 +7,16 @@
           {{ props.row.index }}.
         </b-table-column>
         <b-table-column v-slot="props" field="name" label="Naam">
-          {{ props.row.team.name }}
+          <article class="media">
+            <div class="media-left">
+              <img
+                v-if="props.row.team.icon"
+                :src="require(`~/assets/images/${props.row.team.icon}`)"
+                class="image is-24x24"
+              />
+            </div>
+            <div class="media-content">{{ props.row.team.name }}</div>
+          </article>
         </b-table-column>
         <b-table-column
           v-slot="props"
