@@ -101,9 +101,7 @@ class TeamController extends Controller
                 return $carry + $item->outTeamScore;
             });
 
-            $obj->team = (object)[
-                "name" => $team->name
-            ];
+            $obj->team = $team;
             $obj->gamesPlayed = count($homeGames) + count($outGames);
             $obj->gamesWon = count($homeGamesWon) + count($outGamesWon);
             $obj->gamesLost = count($homeGamesLost) + count($outGamesLost);
