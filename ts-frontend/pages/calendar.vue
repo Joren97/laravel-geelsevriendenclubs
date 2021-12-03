@@ -1,5 +1,5 @@
 <template>
-  <section class="content">
+  <div class="section">
     <h1>Kalender &amp; uitslagen</h1>
     <div class="columns is-hidden-desktop">
       <div class="column">
@@ -36,7 +36,7 @@
         ></b-datepicker>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 <script lang="ts">
 import moment from 'moment';

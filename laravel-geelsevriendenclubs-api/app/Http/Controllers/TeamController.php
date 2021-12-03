@@ -13,7 +13,7 @@ class TeamController extends Controller
 
     public function getAll(Request $request)
     {
-        return response()->json(Team::with(['homeGames', 'outGames'])->paginate(3));
+        return response()->json(Team::with(['homeGames', 'outGames'])->paginate());
     }
 
     public function get($id)

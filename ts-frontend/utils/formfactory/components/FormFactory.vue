@@ -65,8 +65,9 @@ export default {
     // Focus first input
     this.formFactoryIsVisible = true;
     this.$nextTick(() => {
-      const numberOfFields = this.getComponentArray(this.config.components)
-        .length;
+      const numberOfFields = this.getComponentArray(
+        this.config.components,
+      ).length;
       for (let i = 0; i < numberOfFields; i++) {
         if (this.$refs.formFactory != undefined) {
           let input = this.$refs.formFactory[i];
@@ -115,9 +116,7 @@ export default {
                 component: componentWithSameAs,
                 data: this.data,
               });
-              this.validations[
-                componentWithSameAs.name
-              ] = sameAsValidationObject;
+              this.validations[componentWithSameAs.name];
             }
           });
         }

@@ -4,7 +4,7 @@
       <div class="column is-narrow">
         <h1>Clubinfo</h1>
       </div>
-      <div class="column">
+      <!-- <div class="column">
         <b-field>
           <b-select placeholder="Selecteer een club" @input="getCurrentTeam">
             <option
@@ -16,9 +16,14 @@
             </option>
           </b-select>
         </b-field>
+      </div> -->
+    </div>
+    <div class="columns is-multiline">
+      <div v-for="club in clubs" :key="club.id" class="column is-3">
+        <club-card :club="club"></club-card>
       </div>
     </div>
-    <div class="columns is-hidden-desktop">
+    <!-- <div class="columns is-hidden-desktop">
       <div class="column">
         <b-field>
           <b-select
@@ -36,9 +41,9 @@
           </b-select>
         </b-field>
       </div>
-    </div>
+    </div> -->
 
-    <div class="columns">
+    <!-- <div class="columns">
       <div v-if="currentTeam" class="column">
         <div class="columns">
           <div class="column">
@@ -115,25 +120,32 @@
       <div v-else class="column">
         <p>Selecteer een club om de info te bekijken.</p>
       </div>
-    </div>
+    </div> -->
   </section>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator';
+import { TeamDto } from '~/models/Team';
 import { gameModule, teamModule } from '~/store';
+import ClubCard from '~/components/ClubCard.vue';
 @Component({
   layout: 'guest',
   name: 'Clubs',
+  components: { ClubCard },
 })
 export default class Clubs extends Vue {
   async fetch() {
     teamModule.getAll();
   }
-  selectedTeam = null;
+
+  get clubs(): TeamDto[] {
+    return teamModule.items;
+  }
 
   get players() {
     return [];
   }
+
   destroyed() {
     gameModule.setItem(null);
   }

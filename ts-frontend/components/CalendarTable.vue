@@ -1,6 +1,70 @@
 <template>
-  <div class="content">
+  <div class="">
+    <div v-for="date in dates" :key="date" class="mb-3 fixture">
+      <div class="columns fixture-heading">
+        <div class="column">
+          <h5 class="mb-0">{{ date | toDate('nl-BE', 'Europe/Amsterdam') }}</h5>
+        </div>
+      </div>
+      <div
+        v-for="game in matchesOnDate(date)"
+        :key="game.id"
+        class="columns is-mobile fixture-row"
+      >
+        <div class="column">
+          <div class="columns is-mobile">
+            <div class="column">{{ game.home_team.name }}</div>
+            <div class="column is-narrow has-text-centered">
+              {{ game.homeTeamScore }} - {{ game.outTeamScore }}
+            </div>
+            <div class="column has-text-right">{{ game.out_team.name }}</div>
+          </div>
+        </div>
+        <div class="column is-hidden-mobile pl-3">
+          {{ game.home_team.address }}, {{ game.home_team.postalCode }}
+          {{ game.home_team.city }}
+        </div>
+      </div>
+    </div>
+
     <table
+      v-for="date in dates"
+      :key="date"
+      class="table is-striped is-hoverable"
+    >
+      <thead>
+        <tr>
+          <th>{{ date | toDate('nl-BE', 'Europe/Amsterdam') }}</th>
+          <th></th>
+          <th></th>
+          <th class="is-hidden-mobile"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="game in matchesOnDate(date)" :key="game.id">
+          <!-- <td>
+            <div class="columns">
+              <div class="column">{{ game.home_team.name }}</div>
+              <div class="column is-narrow">
+                {{ game.homeTeamScore }} - {{ game.outTeamScore }}
+              </div>
+              <div class="column">{{ game.out_team.name }}</div>
+            </div>
+          </td> -->
+          <td style="min-width: 9rem" class="has-text-right">
+            {{ game.home_team.name }}
+          </td>
+          <td>{{ game.homeTeamScore }} - {{ game.outTeamScore }}</td>
+          <td>{{ game.out_team.name }}</td>
+          <td style="min-width: 9rem" class="has-text-right is-hidden-mobile">
+            {{ game.home_team.address }}, {{ game.home_team.postalCode }}
+            {{ game.home_team.city }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- <table
       v-for="date in dates"
       :key="date"
       class="table is-bordered is-hidden-touch"
@@ -50,7 +114,7 @@
           </td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
     <div
       v-for="(date, index) in dates"
       :key="index"
@@ -61,7 +125,7 @@
       </div>
       <div
         v-for="game in matchesOnDate(date)"
-        :key="game.index"
+        :key="game.id"
         class="column is-12"
       >
         <div class="box py-0">
@@ -146,3 +210,14 @@ export default class CalendarTable extends Vue {
   }
 }
 </script>
+<style lang="scss" scoped>
+$border-color: #dbdbdb;
+
+.fixture-row {
+  border-bottom: 1px solid $border-color;
+}
+
+.fixture-heading {
+  border-bottom: 2px solid $border-color;
+}
+</style>

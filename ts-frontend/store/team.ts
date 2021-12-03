@@ -1,33 +1,37 @@
-import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators';
-import  Team  from '~/models/Team';
+import { Module, Mutation, Action } from 'vuex-module-decorators';
+import  { TeamDto }  from '~/models/Team';
 import { $axios } from '~/utils/api';
-
-const RESOURCE = '/api/team';
+import BaseModule from './base';
 
 @Module({ name: 'team', stateFactory: true, namespaced: true })
-export default class TeamModule extends VuexModule {
-    loading: boolean = false
-    error: string | null = ''
-    teams: Team[] = []
+export default class TeamModule extends BaseModule<TeamDto, TeamDto, TeamDto> {
+    RESOURCE = '/api/team'
     scoreBoard: any = [];
 
-    @Mutation
-    setTeams(value: Team[]) {
-        this.teams = value;
-        this.loading = false;
-        this.error = null;
-    }
+    @Action
+  async getAll() {
+    await super.getAll();
+  }
 
-    @Mutation
-    setError(value: string | null = 'An unknown error occured'): void {
-        this.loading = false;
-        this.error = value;
-    }
+  @Action
+  async create(obj: TeamDto) {
+    await super.create(obj);
+  }
 
-    @Mutation
-    setLoading(value: boolean): void {
-        this.loading = value;
-    }
+  @Action
+  async get(id: string) {
+    await super.get(id);
+  }
+
+  @Action
+  async delete(id: string) {
+    await super.delete(id);
+  }
+
+  @Action
+  async update(obj: TeamDto) {
+    return await super.update(obj);
+  }
 
     @Mutation
     setScoreboard(value: any): void {
@@ -35,24 +39,12 @@ export default class TeamModule extends VuexModule {
     }
 
     @Action({rawError: true})
-    async get(){
-        try {
-            this.setLoading(true);            
-            const {data} = await $axios.get(`${RESOURCE}`);
-            this.setTeams(data)
-            this.setLoading(false);
-          } catch (err) {
-            this.setError();
-          }
-    }
-
-    @Action({rawError: true})
     async getScoreboard(isSmall: boolean = false) {
         try {
-            this.setLoading(true);
+            //this.setLoading(true);
             let {data}= await $axios.get(`/api/scoreboard?isSmall=${isSmall}`);    
             this.setScoreboard(data);
-            this.setLoading(false);
+            //this.setLoading(false);
         } catch (error) {
             this.setError();
         }

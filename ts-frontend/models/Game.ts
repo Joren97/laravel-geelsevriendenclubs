@@ -1,4 +1,4 @@
-import  Team  from '~/models/Team';
+import {TeamDto}  from '~/models/Team';
 export interface GameDto {
     id: number,
     homeTeamId: number,
@@ -10,7 +10,8 @@ export interface GameDto {
     isCancelled: boolean,
     created_at: Date,
     updated_at: Date,
-    teams: Team[]
+    home_team: TeamDto,
+    out_team: TeamDto
 }
 
 export interface CreateGameDto {
@@ -23,8 +24,7 @@ export interface CreateGameDto {
     isCup: boolean,
     isCancelled: boolean,
     created_at: Date,
-    updated_at: Date,
-    teams: Team[]
+    updated_at: Date
 }
 
 export interface UpdateGameDto {
@@ -37,6 +37,5 @@ export interface UpdateGameDto {
     isCup: boolean,
     isCancelled: boolean,
     created_at: Date,
-    updated_at: Date,
-    teams: Team[]
+    updated_at: Date
 }

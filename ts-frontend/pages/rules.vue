@@ -21,8 +21,7 @@ export default {
         {
           type: 1,
           size: 0,
-          text:
-            'De vereniging is gesticht op 01/09/1980 en neemt de benaming aan van Geelse Vriendenclubs, afgekort  G.V.C. Waarvan de statuten en reglementen hieronder worden beschreven.',
+          text: 'De vereniging is gesticht op 01/09/1980 en neemt de benaming aan van Geelse Vriendenclubs, afgekort  G.V.C. Waarvan de statuten en reglementen hieronder worden beschreven.',
         },
       ],
     };
