@@ -84,10 +84,11 @@ export default class BaseModule<Dto, CreateDto, UpdateDto> extends VuexModule {
   }
 
   @Action({ rawError: true })
-  async update(obj: UpdateDto) {
+  async update(obj: UpdateDto, id: number) {
+    console.log(id);
     try {
       this.setLoading(true);
-      const { data: { result, success } } = await $axios.put(`${this.RESOURCE}/update`, obj);
+      const { data: { result, success } } = await $axios.put(`${this.RESOURCE}/${id}`, obj);
       this.setLoading(false);
       return success;
     } catch (error) {
@@ -108,7 +109,7 @@ export default class BaseModule<Dto, CreateDto, UpdateDto> extends VuexModule {
   }
 
   @Action({ rawError: true })
-  async delete(id: string) {
+  async delete(id: number) {
     try {
       this.setLoading(true);
       const { data: { result, success } } = await $axios.delete(`${this.RESOURCE}/delete?id=${id}`);

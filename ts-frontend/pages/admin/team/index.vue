@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="title">Overzicht van de teams</div>
-    <b-table :data="teams" :loading="loading">
+    <b-table :data="teams" :loading="loadingActive">
       <template>
         <b-table-column v-slot="props" label="Naam">
           {{ props.row.name }}
@@ -49,43 +49,75 @@
         </section>
       </template>
       <template slot="footer">
-        <Pagination :total="total" :current="page" :per-page="perPage" />
+        <Pagination
+          :total="total"
+          :current="pagination.page"
+          :per-page="pagination.perPage"
+        />
       </template>
     </b-table>
   </div>
 </template>
-<script>
-import { mapState } from 'vuex';
-export default {
-  watchQuery: true,
-  async fetch({ store, query }) {
-    await store.commit('team/setQueryParams', query);
-    store.dispatch('team/getAll');
-  },
-  computed: {
-    ...mapState({
-      loading: (state) => state.team.loading,
-      teams: (state) => state.team.teams,
-      total: (state) => state.team.total,
-      page: (state) => state.team.page,
-      perPage: (state) => state.team.perPage,
-    }),
-  },
-  methods: {
-    deleteTeam(team) {
-      let t = team;
-      this.$buefy.dialog.confirm({
-        title: 'Team verwijderen',
-        message: `Ben je zeker dat je ${team.name} wilt verwijderen?`,
-        confirmText: 'Verwijderen',
-        cancelText: 'Annuleren',
-        type: 'is-danger',
-        hasIcon: true,
-        onConfirm: () => {
-          this.$store.dispatch('team/delete', t.id);
-        },
-      });
-    },
-  },
-};
+
+<script lang="ts">
+import { Vue, Component, Watch } from 'nuxt-property-decorator';
+import { TeamDto } from '~/models/Team';
+import { teamModule } from '~/store';
+
+@Component({
+  name: 'TeamOverview',
+})
+export default class TeamOverview extends Vue {
+  @Watch('$route', { immediate: true, deep: true })
+  onUrlChange(
+    to: { query: { page: number } },
+    from: { query: { page: number } },
+  ) {
+    if (!to || !from) return;
+
+    let trigger = false;
+    if (to.query.page !== from.query.page) {
+      teamModule.setPaginationParams({ page: to.query.page });
+      trigger = true;
+    }
+
+    if (trigger) teamModule.getAll();
+  }
+
+  async fetch() {
+    teamModule.setPaginationParams({});
+    teamModule.getAll();
+  }
+
+  get loadingActive() {
+    return teamModule.loading;
+  }
+
+  get teams() {
+    return teamModule.items;
+  }
+
+  get total() {
+    return teamModule.totalCount;
+  }
+
+  get pagination() {
+    return teamModule.paginationParams;
+  }
+
+  deleteTeam(team: TeamDto) {
+    let t = team;
+    this.$buefy.dialog.confirm({
+      title: 'Team verwijderen',
+      message: `Ben je zeker dat je ${team.name} wilt verwijderen?`,
+      confirmText: 'Verwijderen',
+      cancelText: 'Annuleren',
+      type: 'is-danger',
+      hasIcon: true,
+      onConfirm: () => {
+        teamModule.delete(t.id);
+      },
+    });
+  }
+}
 </script>

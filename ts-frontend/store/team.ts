@@ -24,13 +24,13 @@ export default class TeamModule extends BaseModule<TeamDto, TeamDto, TeamDto> {
   }
 
   @Action
-  async delete(id: string) {
+  async delete(id: number) {
     await super.delete(id);
   }
 
   @Action
-  async update(obj: TeamDto) {
-    return await super.update(obj);
+  async update(obj: TeamDto) {    
+    return await super.update(obj, obj.id);
   }
 
     @Mutation

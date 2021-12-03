@@ -45,6 +45,9 @@ Route::group([
 ], function ($router) {
     Route::get('/', [GameController::class, 'getAll']);
     Route::get('/{id}', [GameController::class, 'get']);
+    Route::post('/', [GameController::class, 'create']);
+    Route::put('/{id}', [GameController::class, 'update']);
+    Route::delete('/{id}', [GameController::class, 'delete']);
 });
 
 Route::group([
@@ -54,8 +57,10 @@ Route::group([
 ], function ($router) {
     Route::get('/', [TeamController::class, 'getAll']);
     Route::get('/{id}', [TeamController::class, 'get']);
-    Route::get('/scoreboard', [TeamController::class, 'scoreBoard'])->name('scoreboard');
     Route::post('/', [TeamController::class, 'create']);
+    Route::put('/{id}', [TeamController::class, 'update']);
+    Route::delete('/{id}', [TeamController::class, 'delete']);
+    Route::get('/scoreboard', [TeamController::class, 'scoreBoard'])->name('scoreboard');
 });
 
 Route::group([

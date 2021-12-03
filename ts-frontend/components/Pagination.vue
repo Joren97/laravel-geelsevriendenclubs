@@ -24,7 +24,7 @@ export default {
     },
     perPage: {
       type: String,
-      default: '10',
+      default: '15',
     },
   },
   computed: {
