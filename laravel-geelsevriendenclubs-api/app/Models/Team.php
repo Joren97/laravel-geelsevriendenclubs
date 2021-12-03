@@ -16,4 +16,18 @@ class Team extends Model
     public function homeGames(){
      return $this->hasMany(Game::class, 'homeTeamId', 'id');
     }
+
+    protected $fillable = [
+        'name',
+        'address',
+        'postalCode',
+        'city',
+        'color1',
+        'color2',
+        'color3',
+        'color1Hex',
+        'color2Hex',
+        'color3Hex',
+        'icon',
+    ];
 }

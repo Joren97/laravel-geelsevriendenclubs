@@ -18,6 +18,12 @@ export function initializeAxios(
   $axios = axiosInstance;
 
   $axios.onRequest((config) => {
+    const bearerToken = app.$cookies.get('sessionToken');
+
+    if (bearerToken) {
+      config.headers.authorization = `Bearer ${bearerToken}`;
+    }
+
     console.log('Making ' + config.method + ' request to: ' + config.url);
     config.httpsAgent = agent;
   });

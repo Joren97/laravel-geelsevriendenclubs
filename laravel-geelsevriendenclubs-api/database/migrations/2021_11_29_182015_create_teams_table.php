@@ -20,10 +20,10 @@ class CreateTeamsTable extends Migration
             $table->string('postalCode')->nullable();
             $table->string('city')->nullable();
             $table->string('color1')->nullable();
-            $table->string('color1Hex')->nullable();
             $table->string('color2')->nullable();
-            $table->string('color2Hex')->nullable();
             $table->string('color3')->nullable();
+            $table->string('color1Hex')->nullable();
+            $table->string('color2Hex')->nullable();
             $table->string('color3Hex')->nullable();
             $table->integer('balance')->default(0);
             $table->string('icon')->nullable();

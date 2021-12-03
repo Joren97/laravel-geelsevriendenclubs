@@ -55,6 +55,7 @@ Route::group([
     Route::get('/', [TeamController::class, 'getAll']);
     Route::get('/{id}', [TeamController::class, 'get']);
     Route::get('/scoreboard', [TeamController::class, 'scoreBoard'])->name('scoreboard');
+    Route::post('/', [TeamController::class, 'create']);
 });
 
 Route::group([

@@ -99,7 +99,7 @@ export default class BaseModule<Dto, CreateDto, UpdateDto> extends VuexModule {
   async create(obj: CreateDto) {
     try {
       this.setLoading(true);
-      const { data: { result, success } } = await $axios.post(`${this.RESOURCE}/create`, obj);
+      const { data: { result, success } } = await $axios.post(`${this.RESOURCE}`, obj);
       this.setLoading(false);
       return success;
     } catch (error) {
