@@ -1,5 +1,5 @@
 <template>
-  <div class="section">
+  <div class="section content">
     <h1>Kalender &amp; uitslagen</h1>
     <div class="columns is-hidden-desktop">
       <div class="column">

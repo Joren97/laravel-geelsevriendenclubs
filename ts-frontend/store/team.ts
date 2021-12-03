@@ -41,10 +41,10 @@ export default class TeamModule extends BaseModule<TeamDto, TeamDto, TeamDto> {
     @Action({rawError: true})
     async getScoreboard(isSmall: boolean = false) {
         try {
-            //this.setLoading(true);
+            this.setLoading(true);
             let {data}= await $axios.get(`/api/scoreboard?isSmall=${isSmall}`);    
             this.setScoreboard(data);
-            //this.setLoading(false);
+            this.setLoading(false);
         } catch (error) {
             this.setError();
         }

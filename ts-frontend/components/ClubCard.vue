@@ -16,12 +16,15 @@
     </div>
     <div class="club-card-badge">
       <div class="badge">
-        <img src="~/assets/1.svg" alt="" class="badge-image" />
+        <img
+          :src="require(`~/assets/images/${club.icon}`)"
+          class="badge-image"
+        />
       </div>
     </div>
-    <div class="club-card-info">
-      <h4>{{ club.name }}</h4>
-      <small>
+    <div class="club-card-info" :style="{ backgroundColor: club.color1Hex }">
+      <h4 class="has-text-white">{{ club.name }}</h4>
+      <small class="has-text-white">
         {{ club.address }}
         <br />
         {{ club.postalCode }} {{ club.city }}
@@ -103,7 +106,6 @@ export default class CalendarTable extends Vue {
   .club-card-info {
     padding: 3rem 0.5rem 2rem;
     line-height: 1.8;
-    background-color: darkcyan;
   }
 }
 </style>
