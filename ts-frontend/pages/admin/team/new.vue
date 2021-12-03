@@ -1,91 +1,118 @@
 <template>
   <div class="content">
     <div class="title">Team toevoegen</div>
-    <FormFactory :config="formFactoryConfig" @onSubmit="handleOnSubmit" />
+    <FormInput
+      v-for="(item, index) in formConfig"
+      :key="index"
+      :config="item"
+      :input-value.sync="item.value"
+      :validation-schema="validationSchema"
+      @validate="validateField(item.name)"
+    />
+    <b-button @click="addTeam">Toevoegen</b-button>
   </div>
 </template>
 <script>
 import FormFactory from '@/utils/formfactory/components/FormFactory';
-import formTemplates from '@/utils/formfactory/formtemplates';
-import { required, numeric } from '@/utils/formfactory/validations';
+import FormInput from '~/components/Forms/FormInput.vue';
+import { Vue, Component } from 'nuxt-property-decorator';
+import * as yup from 'yup';
 
-export default {
+@Component({
   components: {
     FormFactory,
+    FormInput,
   },
-  computed: {
-    formFactoryConfig() {
-      return {
-        components: [
-          formTemplates.getFormRow({
-            components: [
-              formTemplates.getFormInput({
-                label: 'Naam',
-                name: 'name',
-                placeholder: 'FC De Sjotters',
-                validation: [required],
-              }),
-            ],
-          }),
-          formTemplates.getFormRow({
-            components: [
-              formTemplates.getFormInput({
-                label: 'Adres',
-                name: 'address',
-                placeholder: 'Belgienlaan 3',
-                validation: [required],
-              }),
-              formTemplates.getFormInput({
-                label: 'Postcode',
-                name: 'postalCode',
-                placeholder: '2000',
-                validation: [required, numeric],
-              }),
-              formTemplates.getFormInput({
-                label: 'Stad',
-                name: 'city',
-                placeholder: 'Brussel',
-                validation: [required],
-              }),
-            ],
-          }),
-          formTemplates.getFormRow({
-            components: [
-              formTemplates.getFormInput({
-                label: 'Eerste kleur',
-                name: 'color1',
-                placeholder: 'Blauw',
-                validation: [required],
-              }),
-              formTemplates.getFormInput({
-                label: 'Tweede kleur',
-                name: 'color2',
-                placeholder: 'Blauw',
-              }),
-              formTemplates.getFormInput({
-                label: 'Derde kleur',
-                name: 'color3',
-                placeholder: 'Blauw',
-              }),
-            ],
-          }),
-          formTemplates.getFormRow({
-            components: [
-              formTemplates.getSubmitButton({
-                label: 'Toevoegen',
-                loading: this.$store.state.team.loading,
-                class: 'is-primary',
-              }),
-            ],
-          }),
-        ],
-      };
+})
+export default class NewTeam extends Vue {
+  formConfig = [
+    { name: 'name', label: 'name', component: FormInput, value: '', error: '' },
+    {
+      name: 'address',
+      label: 'adres',
+      component: FormInput,
+      value: '',
+      error: '',
     },
-  },
-  methods: {
-    handleOnSubmit(obj) {
-      this.$store.dispatch('team/create', obj);
+    {
+      name: 'postalCode',
+      label: 'postcode',
+      component: FormInput,
+      value: '',
+      error: '',
     },
-  },
-};
+    { name: 'city', label: 'stad', component: FormInput, value: '', error: '' },
+    {
+      name: 'color1',
+      label: 'kleur 1',
+      component: FormInput,
+      value: '',
+      error: '',
+    },
+    {
+      name: 'color2',
+      label: 'kleur 2',
+      component: FormInput,
+      value: '',
+      error: '',
+    },
+    {
+      name: 'color3',
+      label: 'kleur 3',
+      component: FormInput,
+      value: '',
+      error: '',
+    },
+  ];
+
+  get validationSchema() {
+    return yup.object().shape({
+      name: yup.string().required(),
+      address: yup.string().required(),
+      postalCode: yup.string(),
+      city: yup.string().required(),
+      color1: yup.string().required(),
+      color2: yup.string().required(),
+      color3: yup.string().required(),
+    });
+  }
+
+  addTeam() {
+    const values = {};
+    this.formConfig.forEach((element) => {
+      values[element.name] = element.value;
+    });
+
+    this.validationSchema
+      .validate(values, { abortEarly: false })
+      .then(() => {
+        console.log('valid');
+      })
+      .catch((err) => {
+        console.log('invalid');
+        err.inner.forEach((error) => {
+          this.formConfig.find((x) => x.name == error.path).error =
+            error.message;
+        });
+        console.log(this.formConfig);
+      });
+  }
+
+  validateField(field) {
+    const values = {};
+    this.formConfig.forEach((element) => {
+      values[element.name] = element.value;
+    });
+
+    this.validationSchema
+      .validateAt(field, values)
+      .then(() => {
+        this.formConfig.find((x) => x.name == field).error = '';
+      })
+      .catch((err) => {});
+  }
+  handleOnSubmit(obj) {
+    this.$store.dispatch('team/create', obj);
+  }
+}
 </script>
