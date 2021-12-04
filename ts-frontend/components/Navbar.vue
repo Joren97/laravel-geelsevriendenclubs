@@ -26,7 +26,7 @@ export default {
         { display: 'Home', link: '/' },
         { display: 'Kalender & uitslagen', link: '/calendar' },
         { display: 'Rangschikking', link: '/scoreboard' },
-        { display: 'Schorsingen & boetes', link: '/suspensions' },
+        // { display: 'Schorsingen & boetes', link: '/suspensions' },
         { display: 'Clubinfo', link: '/clubs' },
         { display: 'Reglement', link: '/rules' },
       ],
