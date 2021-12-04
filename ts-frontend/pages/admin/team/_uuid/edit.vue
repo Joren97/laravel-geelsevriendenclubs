@@ -108,10 +108,8 @@ export default class EditTeam extends Vue {
     };
   }
   handleOnSubmit(obj: any) {
-    console.log(this.teamToEdit);
-
     if (!this.teamToEdit) return;
-    teamModule.update(obj, this.teamToEdit.id);
+    teamModule.update(obj);
   }
 }
 </script>

@@ -17,6 +17,10 @@ class Team extends Model
      return $this->hasMany(Game::class, 'homeTeamId', 'id');
     }
 
+    public function people(){
+        return $this->hasMany(Person::class, 'team_id', 'id');
+    }
+
     protected $fillable = [
         'name',
         'address',
