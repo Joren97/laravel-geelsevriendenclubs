@@ -21,6 +21,9 @@ import ClubCard from '~/components/ClubCard.vue';
   layout: 'guest',
   name: 'Clubs',
   components: { ClubCard },
+  head: {
+    title: 'Clubinfo',
+  },
 })
 export default class Clubs extends Vue {
   async fetch() {

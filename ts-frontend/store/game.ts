@@ -33,7 +33,7 @@ export default class GameModule extends BaseModule<GameDto, CreateGameDto, Updat
   @Action
   async getAll() {
     await super.getAll({
-      extra: `?from=${this.filterDates[0]}&till=${this.filterDates[1]}`
+      extra: `&from=${this.filterDates[0]}&till=${this.filterDates[1]}`
     });
   }
 
@@ -48,13 +48,13 @@ export default class GameModule extends BaseModule<GameDto, CreateGameDto, Updat
   }
 
   @Action
-  async delete(id: string) {
+  async delete(id: number) {
     await super.delete(id);
   }
 
   @Action
   async update(obj: UpdateGameDto) {
-    return await super.update(obj);
+    return await super.update(obj, obj.id);
   }
 
   @Action({ rawError: true })

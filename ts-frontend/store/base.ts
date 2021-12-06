@@ -12,7 +12,7 @@ export default class BaseModule<Dto, CreateDto, UpdateDto> extends VuexModule {
   totalCount: number = 0;
   paginationParams: { page: number, pageSize: number, sorting: string } = {
     page: 1,
-    pageSize: 10,
+    pageSize: 15,
     sorting: '',
   }
 
@@ -62,8 +62,9 @@ export default class BaseModule<Dto, CreateDto, UpdateDto> extends VuexModule {
     const skipCount = (page - 1) * pageSize;
     try {      
       this.setLoading(true);
-      const { data: {data, per_page, total} } = await $axios.get(`${this.RESOURCE}` +
-        extra);        
+      const { data: {data, per_page, total} } = await $axios.get(`${this.RESOURCE}`
+        + `?per_page=${pageSize}`
+        + extra);        
       this.setItems({ data, total });
     } catch (error) {
       console.log(error);      

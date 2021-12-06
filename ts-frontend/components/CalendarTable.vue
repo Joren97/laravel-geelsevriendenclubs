@@ -16,7 +16,7 @@
             <div class="column">
               <article class="media">
                 <div class="media-content">{{ game.home_team.name }}</div>
-                <div class="media-right">
+                <div class="media-right mx-0">
                   <img
                     v-if="game.home_team.icon"
                     :src="require(`~/assets/images/${game.home_team.icon}`)"
@@ -25,12 +25,12 @@
                 </div>
               </article>
             </div>
-            <div class="column is-narrow has-text-centered">
+            <div class="column is-narrow has-text-centered px-0">
               {{ game.homeTeamScore }} - {{ game.outTeamScore }}
             </div>
             <div class="column has-text-right">
               <article class="media">
-                <div class="media-left">
+                <div class="media-left mx-0">
                   <img
                     v-if="game.out_team.icon"
                     :src="require(`~/assets/images/${game.out_team.icon}`)"

@@ -1,5 +1,5 @@
 <template>
-  <div class="section content">
+  <div class="content">
     <h1>Kalender &amp; uitslagen</h1>
     <div class="columns is-hidden-desktop">
       <div class="column">
@@ -8,7 +8,6 @@
           placeholder="Click to select..."
           type="month"
           icon="calendar-today"
-          range
           :mobile-native="false"
         ></b-datepicker>
       </div>
@@ -47,6 +46,9 @@ import { gameModule } from '~/store';
   components: { CalendarTable },
   layout: 'guest',
   name: 'Calendar',
+  head: {
+    title: 'Kalender & uitslagen',
+  },
 })
 export default class Calendar extends Vue {
   @Watch('$route', { immediate: true, deep: true })
@@ -84,13 +86,18 @@ export default class Calendar extends Vue {
   }
 
   set month(value: Date) {
+    console.log(value);
     const start = moment(value).startOf('month').format('YYYY-MM-DD');
     const end = moment(value).endOf('month').format('YYYY-MM-DD');
     this.$router.push(`?from=${start}&till=${end}`);
   }
 
-  async fetch({ query }: any) {
-    gameModule.setPaginationParams(query);
+  async fetch() {
+    const start = moment(new Date()).startOf('month').format('YYYY-MM-DD');
+    const end = moment(new Date()).endOf('month').format('YYYY-MM-DD');
+    gameModule.setFromDate(start);
+    gameModule.setTillDate(end);
+    gameModule.setPaginationParams({ page: 1, pageSize: 100 });
     gameModule.getAll();
   }
 }

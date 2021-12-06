@@ -91,6 +91,9 @@ import { teamModule } from '~/store';
 
 @Component({
   layout: 'guest',
+  head: {
+    title: 'Rangschikking',
+  },
 })
 export default class Scoreboard extends Vue {
   async fetch() {

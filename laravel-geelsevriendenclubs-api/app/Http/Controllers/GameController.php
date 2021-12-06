@@ -21,6 +21,7 @@ class GameController extends Controller
     {
         $from = date($request->get("from"));
         $till = date($request->get("till"));
+        $perPage = $request->get("per_page");
 
         $conditions = [];
 
@@ -34,7 +35,7 @@ class GameController extends Controller
 
         return response()->json(Game::where($conditions)
             ->with(['homeTeam', 'outTeam'])
-            ->paginate());
+            ->paginate($perPage));
     }
 
     public function get($id)

@@ -35,8 +35,12 @@
           </tr>
         </table>
         <h4>Spelers</h4>
-        <div class="columns is-multiline">
-          <div v-for="p in players" :key="p.id" class="column is-2">
+        <div class="columns is-multiline is-mobile">
+          <div
+            v-for="p in players"
+            :key="p.id"
+            class="column is-2-desktop is-3-tablet is-6-mobile"
+          >
             <person-card
               :name="p.firstName + ' ' + p.lastName"
               :color1="club.color1Hex"
@@ -56,9 +60,12 @@ import { teamModule } from '~/store';
   layout: 'guest',
   name: 'ClubDetail',
   components: { PersonCard },
+  head: {
+    title: 'Clubinfo',
+  },
 })
 export default class ClubDetail extends Vue {
-  async fetch() {
+  beforeMount() {
     teamModule.get(this.$route.params.id);
   }
 
