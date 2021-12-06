@@ -107,9 +107,5 @@ export default class PersonCard extends Vue {
 
   @Prop({})
   color3: string;
-
-  get color() {
-    return '#ff0000';
-  }
 }
 </script>
