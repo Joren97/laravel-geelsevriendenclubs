@@ -18,7 +18,7 @@ const routerObject =
   process.env.NODE_ENV === 'production'
     ? {
         router: {
-          base: '/geelsevriendenclubs_app',
+          base: '/projects/geelsevriendenclubs',
         },
       }
     : {};
@@ -26,7 +26,7 @@ const routerObject =
 export default {
   ...routerObject,
   ...axiosObject,
-  mode: 'universal',
+  target: 'static',
   /*
    ** Headers of the page
    */

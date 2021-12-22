@@ -96,16 +96,13 @@ import { Vue, Component, Prop } from 'nuxt-property-decorator';
   name: 'PersonCard',
 })
 export default class PersonCard extends Vue {
-  @Prop({})
-  name: string;
+  @Prop({required: true})
+  name!: string;
 
-  @Prop({})
-  color1: string;
+  @Prop({required: true})
+  color1!: string;
 
-  @Prop({})
-  color2: string;
-
-  @Prop({})
-  color3: string;
+  @Prop({required: true})
+  color2!: string;
 }
 </script>

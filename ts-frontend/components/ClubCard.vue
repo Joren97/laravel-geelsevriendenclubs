@@ -40,12 +40,8 @@ import { TeamDto } from '~/models/Team';
   name: 'CalendarTable',
 })
 export default class CalendarTable extends Vue {
-  @Prop({
-    type: TeamDto,
-    required: true,
-    default: null,
-  })
-  club: TeamDto;
+  @Prop({ required: true, default: null })
+  club!: TeamDto;
 
   openDetail() {
     console.log('Move to detail');
