@@ -14,5 +14,5 @@ jobs:
         server: ftp.zenithwebdesign.be
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
-        local-dir: ./laravel-geelsevriendenclubs-api
-        server-dir: /web/projects/geelsevriendenclubs-api
+        local-dir: ./laravel-geelsevriendenclubs-api/
+        server-dir: /web/projects/geelsevriendenclubs-api/
