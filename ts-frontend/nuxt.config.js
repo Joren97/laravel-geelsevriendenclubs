@@ -2,7 +2,7 @@ const axiosObject =
   process.env.NODE_ENV === 'production'
     ? {
         axios: {
-          baseURL: 'https://budgetbase.ddns.net/geelsevriendenclubs_api/api/',
+          baseURL: 'https://zenithwebdesign.be/projects/geelsevriendenclubs-api/public/api',
           progress: false,
         },
       }
