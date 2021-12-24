@@ -1,0 +1,18 @@
+on: [workflow_dispatch] 
+name: 🚀 Deploy api on push
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v2
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.2.0
+      with:
+        server: ftp.zenithwebdesign.be
+        username: ${{ secrets.ftp_username }}
+        password: ${{ secrets.ftp_password }}
+        local-dir: ./laravel-geelsevriendenclubs-api/
+        server-dir: /web/projects/geelsevriendenclubs-api/
