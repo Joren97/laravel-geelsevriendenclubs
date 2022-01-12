@@ -65,7 +65,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 export default {
-  async fetch({ store, params }) {
+  beforeMount({ store, params }) {
     store.dispatch('team/get', params.uuid);
   },
   data() {

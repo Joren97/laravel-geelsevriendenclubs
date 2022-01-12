@@ -54,6 +54,7 @@ export default class BaseModule<Dto, CreateDto, UpdateDto> extends VuexModule {
 
   @Action({ rawError: true })
   async getAll(paginationParams?: { page?: number, pageSize?: number, sorting?: string, extra?: string }) {
+    console.log("super.getAll triggered");
     const pageSize = paginationParams !== undefined && paginationParams.pageSize !== undefined ? paginationParams.pageSize : this.paginationParams.pageSize;
     const page = paginationParams !== undefined && paginationParams.page !== undefined ? paginationParams.page : this.paginationParams.page;
     const sorting = paginationParams !== undefined && paginationParams.sorting !== undefined ? paginationParams.sorting : this.paginationParams.sorting;

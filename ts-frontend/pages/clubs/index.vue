@@ -26,7 +26,7 @@ import ClubCard from '~/components/ClubCard.vue';
   },
 })
 export default class Clubs extends Vue {
-  async fetch() {
+  beforeMount() {
     teamModule.getAll();
   }
 

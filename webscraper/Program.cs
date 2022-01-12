@@ -105,7 +105,7 @@ namespace webscraper
 
             foreach (var club in clubs)
             {
-                clubSql += $"INSERT INTO Teams (id, name, address, postalCode,city,color1,color2,color3,balance, created_at, updated_at)" +
+                clubSql += $"INSERT INTO teams (id, name, address, postalCode,city,color1,color2,color3,balance, created_at, updated_at)" +
                     $" VALUES ({club.Id},\"{club.Name}\", '', '', '', '','','',75, '', '');\n";
             }
 
@@ -114,7 +114,7 @@ namespace webscraper
                 string homeTeamScore = game.HomeTeamScore.HasValue ? game.HomeTeamScore.Value.ToString() : "null";
                 string outTeamScore = game.OutTeamScore.HasValue ? game.OutTeamScore.Value.ToString() : "null";
 
-                gameSql += $"INSERT INTO Games (id, homeTeamId, outTeamId, homeTeamScore, outTeamScore, dateTime, isCup, isCancelled, created_at, updated_at)" +
+                gameSql += $"INSERT INTO games (id, homeTeamId, outTeamId, homeTeamScore, outTeamScore, dateTime, isCup, isCancelled, created_at, updated_at)" +
                     $" VALUES ('',{game.Club1.Id}, {game.Club2.Id}, {homeTeamScore}, {outTeamScore}, \"{game.DateTime:yyyy-MM-dd HH:mm:ss}\", {game.IsCup}, 0, '', '');\n";
                 //teamInGameSql += $"INSERT INTO game_team (id, team_id, game_id, goalsScored, ishomeTeam, created_at, updated_at)" +
                 //    $" VALUES ('', {game.Club1.Id}, {game.Id}, 0, 1, '', '');\n";
@@ -126,7 +126,7 @@ namespace webscraper
             {
                 foreach (var p in club.Players)
                 {
-                    personSql += $"INSERT INTO People (id, team_id, firstName, lastName, address, postalCode, city, email, tel, birthdate, playerNumber, created_at, updated_at)" +
+                    personSql += $"INSERT INTO people (id, team_id, firstName, lastName, address, postalCode, city, email, tel, birthdate, playerNumber, created_at, updated_at)" +
                        $" VALUES ('', {club.Id}, \"{p.FistName}\", \"{p.LastName}\",'','','','','','', \"{p.PlayerNumber}\", '','');\n";
                 }
             }

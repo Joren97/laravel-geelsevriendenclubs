@@ -84,7 +84,7 @@ export default class TeamOverview extends Vue {
     if (trigger) teamModule.getAll();
   }
 
-  async fetch() {
+  beforeMount() {
     teamModule.setPaginationParams({});
     teamModule.getAll();
   }

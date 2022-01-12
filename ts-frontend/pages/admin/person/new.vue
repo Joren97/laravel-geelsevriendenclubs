@@ -14,7 +14,7 @@ export default {
   components: {
     FormFactory,
   },
-  async fetch({ store }) {
+  async beforeMount({ store }) {
     await store.dispatch('team/getAll');
   },
   computed: {

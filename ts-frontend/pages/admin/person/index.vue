@@ -86,7 +86,7 @@ import { getName } from '@/utils/enum.js';
 import { mapState } from 'vuex';
 export default {
   watchQuery: true,
-  async fetch({ store, query }) {
+  async beforeMount({ store, query }) {
     await store.commit('person/setQueryParams', query);
     store.dispatch('person/getAll');
   },

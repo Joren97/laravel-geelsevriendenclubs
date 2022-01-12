@@ -29,7 +29,7 @@ export default class EditTeam extends Vue {
     teamModule.setItem(null);
   }
 
-  async fetch() {
+  async beforeMount() {
     await teamModule.get(this.$route.params.uuid);
   }
 

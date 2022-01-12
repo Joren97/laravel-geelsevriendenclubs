@@ -17,7 +17,7 @@ export default {
   components: {
     FormFactory,
   },
-  async fetch({ store, params }) {
+  async beforeMount({ store, params }) {
     await store.dispatch('game/get', params.uuid);
     await store.dispatch('team/getAllUnfiltered');
   },

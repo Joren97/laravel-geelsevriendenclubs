@@ -15,7 +15,7 @@ import { Vue, Component } from 'nuxt-property-decorator';
 })
 export default class Rules extends Vue {
   content = { content: { rendered: '' } };
-  async fetch() {
+  async beforeMount() {
     const res = await this.$axios.get(
       'https://zenithwebdesign.be/projects/wp-geelsevriendenclubs/wp-json/wp/v2/pages/818',
     );

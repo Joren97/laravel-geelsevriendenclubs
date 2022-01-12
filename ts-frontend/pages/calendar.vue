@@ -92,7 +92,7 @@ export default class Calendar extends Vue {
     this.$router.push(`?from=${start}&till=${end}`);
   }
 
-  async fetch() {
+  beforeMount() {
     const start = moment(new Date()).startOf('month').format('YYYY-MM-DD');
     const end = moment(new Date()).endOf('month').format('YYYY-MM-DD');
     gameModule.setFromDate(start);

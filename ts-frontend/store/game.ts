@@ -32,27 +32,29 @@ export default class GameModule extends BaseModule<GameDto, CreateGameDto, Updat
 
   @Action
   async getAll() {
+    console.log("game.getAll triggered");
+    
     await super.getAll({
       extra: `&from=${this.filterDates[0]}&till=${this.filterDates[1]}`
     });
   }
 
-  @Action
+  @Action({ rawError: true })
   async create(obj: CreateGameDto) {
     await super.create(obj);
   }
 
-  @Action
+  @Action({ rawError: true })
   async get(id: string) {
     await super.get(id);
   }
 
-  @Action
+  @Action({ rawError: true })
   async delete(id: number) {
     await super.delete(id);
   }
 
-  @Action
+  @Action({ rawError: true })
   async update(obj: UpdateGameDto) {
     return await super.update(obj, obj.id);
   }

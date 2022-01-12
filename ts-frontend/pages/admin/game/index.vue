@@ -113,7 +113,7 @@ import moment from 'moment';
 import { mapState } from 'vuex';
 export default {
   watchQuery: true,
-  async fetch({ store, query }) {
+  async beforeMount({ store, query }) {
     await store.commit('game/setQueryParams', query);
     store.dispatch('game/getAll');
   },

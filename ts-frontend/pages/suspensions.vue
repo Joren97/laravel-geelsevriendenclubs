@@ -76,7 +76,7 @@
 <script>
 export default {
   layout: 'guest',
-  async fetch({ store }) {
+  beforeMount({ store }) {
     store.dispatch('team/getAllUnfiltered');
     store.dispatch('suspension/getAll');
   },

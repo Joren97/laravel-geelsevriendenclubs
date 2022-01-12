@@ -96,7 +96,7 @@ import { teamModule } from '~/store';
   },
 })
 export default class Scoreboard extends Vue {
-  async fetch() {
+  beforeMount() {
     teamModule.getScoreboard(false);
   }
   get scoreBoard() {
